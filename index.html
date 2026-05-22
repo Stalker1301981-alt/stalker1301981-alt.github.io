@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Переменные для Темной темы (По умолчанию) */
         :root {
             --bg-color: #0b0f19;
             --card-bg: #131c2e;
@@ -16,8 +17,23 @@
             --accent: #38bdf8;
             --accent-hover: #0ea5e9;
             --border: #1e293b;
+            --theme-btn-bg: #1e293b;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* Переменные для Светлой темы */
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --border: #e2e8f0;
+            --theme-btn-bg: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
@@ -28,20 +44,62 @@
             flex-direction: column;
             align-items: center;
         }
+
+        /* Кнопка переключения темы */
+        .theme-toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--theme-btn-bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
         .header {
             text-align: center;
             margin-bottom: 40px;
+            margin-top: 20px;
         }
+
         .header h1 {
             font-size: 28px;
             font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 6px;
         }
+
         .header p {
             color: var(--text-muted);
             font-size: 15px;
         }
+
+        /* Меню навигации */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 35px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .nav-links span {
+            color: var(--text-muted);
+            cursor: pointer;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links span.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -49,6 +107,7 @@
             width: 100%;
             max-width: 1000px;
         }
+
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border);
@@ -57,18 +116,15 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
         }
-        .card:hover {
-            transform: translateY(-2px);
-            border-color: #334155;
-        }
+
         .card-top {
             display: flex;
             align-items: center;
             gap: 14px;
             margin-bottom: 16px;
         }
+
         .card-icon {
             width: 44px;
             height: 44px;
@@ -80,94 +136,123 @@
             color: var(--accent);
             font-size: 20px;
         }
+
         .card-title h3 {
             font-size: 16px;
             font-weight: 600;
         }
+
         .card-title p {
             font-size: 13px;
             color: var(--text-muted);
         }
+
         .card-body {
             font-size: 14px;
-            color: #cbd5e1;
+            color: var(--text-main);
+            opacity: 0.8;
             line-height: 1.5;
             margin-bottom: 20px;
         }
+
         .btn {
             display: block;
             text-align: center;
             background-color: var(--accent);
-            color: #0b0f19;
+            color: var(--bg-color);
             text-decoration: none;
             padding: 12px;
             border-radius: 10px;
             font-weight: 600;
             font-size: 14px;
-            transition: background-color 0.2s;
         }
+
         .btn:hover {
-            background-color: var(--accent-hover);
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
 
+<button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn">☀️ Светлая тема</button>
+
 <div class="header">
     <h1>MK7 · Distant</h1>
-    <p>Актуальные ссылки и материалы дистанционного обучения</p>
+    <p>Информационная система дистанционного обучения</p>
 </div>
 
-<div class="grid" id="links-container">
-    <!-- Сюда JavaScript автоматически добавит карточки из базы данных -->
+<div class="nav-links">
+    <span id="tab-groups" class="active" onclick="switchTab('groups')">Группы</span>
+    <span id="tab-ids" onclick="switchTab('ids')">Мой ID</span>
+    <span id="tab-links" onclick="switchTab('links')">Ссылки</span>
+</div>
+
+<div class="grid" id="content-container">
+    <!-- Сюда JavaScript автоматически добавит карточки -->
 </div>
 
 <script>
-    // Встроенный аналог файла data.js с последней версии GitVerse
-    const distantData = [
-        {
-            title: "Учебные группы",
-            desc: "Официальные чаты и каналы учебных групп МК7 для оперативной связи.",
-            linkText: "Перейти к группам",
-            linkUrl: "https://t.me", // Укажите нужную ссылку вместо https://t.me
-            icon: "👥"
-        },
-        {
-            title: "Личный ID студента",
-            desc: "Проверка индивидуального идентификатора для авторизации в образовательной среде.",
-            linkText: "Узнать свой ID",
-            linkUrl: "https://t.me",
-            icon: "🆔"
-        },
-        {
-            title: "Материалы лекций (MAX)",
-            desc: "Прямое подключение к лекционным материалам и базам знаний MAX.",
-            linkText: "Открыть материалы",
-            linkUrl: "https://t.me",
-            icon: "📚"
-        }
-    ];
+    // База данных прямо внутри кода (заменяет data.js)
+    const siteData = {
+        groups: [
+            { title: "Группа 1-1", desc: "Официальный чат студентов 1 курса для дистанционных занятий.", linkText: "Войти в чат", url: "https://t.me", icon: "👥" },
+            { title: "Группа 2-1", desc: "Информационный канал для координации лекций 2 курса.", linkText: "Перейти в канал", url: "https://t.me", icon: "📢" }
+        ],
+        ids: [
+            { title: "Получить ID", desc: "Узнайте ваш персональный идентификационный номер в базе колледжа.", linkText: "Запросить ID", url: "https://t.me", icon: "🆔" }
+        ],
+        links: [
+            { title: "Платформа MAX", desc: "Основной образовательный портал с лекциями и тестами.", linkText: "Открыть MAX", url: "https://t.me", icon: "📚" },
+            { title: "Сайт Колледжа", desc: "Официальный веб-сайт Медицинского колледжа №7.", linkText: "Перейти на сайт", url: "https://mk7.ru", icon: "🌐" }
+        ]
+    };
 
-    // Код автоматической сборки сайта из данных
-    const container = document.getElementById('links-container');
-    distantData.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <div>
-                <div class="card-top">
-                    <div class="card-icon">${item.icon}</div>
-                    <div class="card-title">
-                        <h3>${item.title}</h3>
-                        <p>Дистанционное обучение</p>
+    // Логика переключения вкладок
+    function switchTab(category) {
+        // Меняем активную кнопку меню
+        document.querySelectorAll('.nav-links span').forEach(el => el.classList.remove('active'));
+        document.getElementById(`tab-${category}`).classList.add('active');
+
+        // Очищаем и заполняем контейнер карточками
+        const container = document.getElementById('content-container');
+        container.innerHTML = '';
+
+        siteData[category].forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">${item.icon}</div>
+                        <div class="card-title">
+                            <h3>${item.title}</h3>
+                            <p>Дистанционное обучение</p>
+                        </div>
                     </div>
+                    <div class="card-body">${item.desc}</div>
                 </div>
-                <div class="card-body">${item.desc}</div>
-            </div>
-            <a href="${item.linkUrl}" class="btn" target="_blank">${item.linkText}</a>
-        `;
-        container.appendChild(card);
-    });
+                <a href="${item.url}" class="btn" target="_blank">${item.linkText}</a>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // Логика переключения Тем (Светлая / Темная)
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const btn = document.getElementById('theme-btn');
+        
+        if (currentTheme === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+            btn.innerText = "☀️ Светлая тема";
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            btn.innerText = "🌙 Тёмная тема";
+        }
+    }
+
+    // Загрузка первой вкладки при старте страницы
+    window.onload = () => switchTab('groups');
 </script>
 
 </body>
