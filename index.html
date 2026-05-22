@@ -3,101 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>МК7 — Distant</title>
-    <!-- Подключаем шрифты как на оригинальном сайте -->
+    <title>МК7 — Дистанционное обучение</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-color: #0b0f19;
+            --card-bg: #131c2e;
             --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-muted: #64748b;
             --accent: #38bdf8;
-            --accent-hover: #7dd3fc;
+            --accent-hover: #0ea5e9;
+            --border: #1e293b;
         }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+        .header p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: #334155;
+        }
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-        }
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-        .nav-links {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 24px;
-            font-size: 14px;
-        }
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover {
             color: var(--accent);
+            font-size: 20px;
         }
-        h2 {
-            font-size: 18px;
+        .card-title h3 {
+            font-size: 16px;
             font-weight: 600;
-            margin-bottom: 16px;
-            text-align: left;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 8px;
         }
-        .join-box {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 16px;
-            border-radius: 12px;
-            margin-top: 20px;
+        .card-title p {
+            font-size: 13px;
+            color: var(--text-muted);
         }
-        .join-box p {
+        .card-body {
             font-size: 14px;
-            color: var(--text-main);
-            margin-bottom: 12px;
-            font-weight: 500;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
         .btn {
-            display: inline-block;
+            display: block;
+            text-align: center;
             background-color: var(--accent);
-            color: #0f172a;
+            color: #0b0f19;
             text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 10px;
             font-weight: 600;
             font-size: 14px;
             transition: background-color 0.2s;
-            width: 100%;
         }
         .btn:hover {
             background-color: var(--accent-hover);
@@ -106,24 +113,62 @@
 </head>
 <body>
 
-<div class="container">
+<div class="header">
     <h1>MK7 · Distant</h1>
-    <div class="subtitle">Дистанционное обучение МК7</div>
-    
-    <div class="nav-links">
-        <a href="#">Группы</a>
-        <a href="#">Мой ID</a>
-        <a href="#">Ссылки</a>
-    </div>
-
-    <h2>Список ссылок</h2>
-    
-    <div class="join-box">
-        <p>Группа для дистанционного обучения в MAX</p>
-        <!-- Замени href на реальную ссылку для подключения -->
-        <a href="https://t.me" class="btn" target="_blank">Присоединиться</a>
-    </div>
+    <p>Актуальные ссылки и материалы дистанционного обучения</p>
 </div>
+
+<div class="grid" id="links-container">
+    <!-- Сюда JavaScript автоматически добавит карточки из базы данных -->
+</div>
+
+<script>
+    // Встроенный аналог файла data.js с последней версии GitVerse
+    const distantData = [
+        {
+            title: "Учебные группы",
+            desc: "Официальные чаты и каналы учебных групп МК7 для оперативной связи.",
+            linkText: "Перейти к группам",
+            linkUrl: "https://t.me", // Укажите нужную ссылку вместо https://t.me
+            icon: "👥"
+        },
+        {
+            title: "Личный ID студента",
+            desc: "Проверка индивидуального идентификатора для авторизации в образовательной среде.",
+            linkText: "Узнать свой ID",
+            linkUrl: "https://t.me",
+            icon: "🆔"
+        },
+        {
+            title: "Материалы лекций (MAX)",
+            desc: "Прямое подключение к лекционным материалам и базам знаний MAX.",
+            linkText: "Открыть материалы",
+            linkUrl: "https://t.me",
+            icon: "📚"
+        }
+    ];
+
+    // Код автоматической сборки сайта из данных
+    const container = document.getElementById('links-container');
+    distantData.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div>
+                <div class="card-top">
+                    <div class="card-icon">${item.icon}</div>
+                    <div class="card-title">
+                        <h3>${item.title}</h3>
+                        <p>Дистанционное обучение</p>
+                    </div>
+                </div>
+                <div class="card-body">${item.desc}</div>
+            </div>
+            <a href="${item.linkUrl}" class="btn" target="_blank">${item.linkText}</a>
+        `;
+        container.appendChild(card);
+    });
+</script>
 
 </body>
 </html>
