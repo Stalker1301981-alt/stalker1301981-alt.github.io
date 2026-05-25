@@ -1,259 +1,76 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>МК7 — Дистанционное обучение</title>
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Переменные для Темной темы (По умолчанию) */
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131c2e;
-            --text-main: #f8fafc;
-            --text-muted: #64748b;
-            --accent: #38bdf8;
-            --accent-hover: #0ea5e9;
-            --border: #1e293b;
-            --theme-btn-bg: #1e293b;
-        }
-
-        /* Переменные для Светлой темы */
-        [data-theme="light"] {
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --accent: #0284c7;
-            --accent-hover: #0369a1;
-            --border: #e2e8f0;
-            --theme-btn-bg: #e2e8f0;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Кнопка переключения темы */
-        .theme-toggle-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: var(--theme-btn-bg);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            margin-top: 20px;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
-        }
-
-        .header p {
-            color: var(--text-muted);
-            font-size: 15px;
-        }
-
-        /* Меню навигации */
-        .nav-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 35px;
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .nav-links span {
-            color: var(--text-muted);
-            cursor: pointer;
-            padding-bottom: 4px;
-            border-bottom: 2px solid transparent;
-        }
-
-        .nav-links span.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-top {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 16px;
-        }
-
-        .card-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(56, 189, 248, 0.1);
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--accent);
-            font-size: 20px;
-        }
-
-        .card-title h3 {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .card-title p {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .card-body {
-            font-size: 14px;
-            color: var(--text-main);
-            opacity: 0.8;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            display: block;
-            text-align: center;
-            background-color: var(--accent);
-            color: var(--bg-color);
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="icon" type="image/webp" href="./image/MK7_logo.webp" />
+  <title>МК7 — Distant</title>
 </head>
+
 <body>
 
-<button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn">☀️ Светлая тема</button>
+  <header class="header">
+    <nav class="navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img class="logo" src="./image/MK7_logo.webp" alt="MK7">
+          MK7 · Distant
+        </a>
 
-<div class="header">
-    <h1>MK7 · Distant</h1>
-    <p>Информационная система дистанционного обучения</p>
-</div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <button class="nav-link active" type="button" data-navBtn="main">Группы</button>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://clck.ru/3PWCPH" target="_blank" data-navBtn="myID">Мой ID</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" type="button" data-navBtn="navList">Ссылки</button>
+          </li>
+        </ul>
 
-<div class="nav-links">
-    <span id="tab-groups" class="active" onclick="switchTab('groups')">Группы</span>
-    <span id="tab-ids" onclick="switchTab('ids')">Мой ID</span>
-    <span id="tab-links" onclick="switchTab('links')">Ссылки</span>
-</div>
+        <form class="search" role="search">
+          <input class="searchInput" type="number" placeholder="Поиск по номеру группы" aria-label="Поиск">
+          <button class="theme-toggle" type="button" aria-label="Переключить тему"></button>
+        </form>
+      </div>
+    </nav>
+  </header>
 
-<div class="grid" id="content-container">
-    <!-- Сюда JavaScript автоматически добавит карточки -->
-</div>
+  <main class="main">
+    <section class="card-list"></section>
 
-<script>
-    // База данных прямо внутри кода (заменяет data.js)
-    const siteData = {
-        groups: [
-            { title: "Группа 1-1", desc: "Официальный чат студентов 1 курса для дистанционных занятий.", linkText: "Войти в чат", url: "https://t.me", icon: "👥" },
-            { title: "Группа 2-1", desc: "Информационный канал для координации лекций 2 курса.", linkText: "Перейти в канал", url: "https://t.me", icon: "📢" }
-        ],
-        ids: [
-            { title: "Получить ID", desc: "Узнайте ваш персональный идентификационный номер в базе колледжа.", linkText: "Запросить ID", url: "https://t.me", icon: "🆔" }
-        ],
-        links: [
-            { title: "Платформа MAX", desc: "Основной образовательный портал с лекциями и тестами.", linkText: "Открыть MAX", url: "https://t.me", icon: "📚" },
-            { title: "Сайт Колледжа", desc: "Официальный веб-сайт Медицинского колледжа №7.", linkText: "Перейти на сайт", url: "https://mk7.ru", icon: "🌐" }
-        ]
-    };
-
-    // Логика переключения вкладок
-    function switchTab(category) {
-        // Меняем активную кнопку меню
-        document.querySelectorAll('.nav-links span').forEach(el => el.classList.remove('active'));
-        document.getElementById(`tab-${category}`).classList.add('active');
-
-        // Очищаем и заполняем контейнер карточками
-        const container = document.getElementById('content-container');
-        container.innerHTML = '';
-
-        siteData[category].forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon">${item.icon}</div>
-                        <div class="card-title">
-                            <h3>${item.title}</h3>
-                            <p>Дистанционное обучение</p>
-                        </div>
-                    </div>
-                    <div class="card-body">${item.desc}</div>
-                </div>
-                <a href="${item.url}" class="btn" target="_blank">${item.linkText}</a>
-            `;
-            container.appendChild(card);
-        });
-    }
-
-    // Логика переключения Тем (Светлая / Темная)
-    function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const btn = document.getElementById('theme-btn');
-        
-        if (currentTheme === 'light') {
-            document.documentElement.removeAttribute('data-theme');
-            btn.innerText = "☀️ Светлая тема";
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-            btn.innerText = "🌙 Тёмная тема";
-        }
-    }
-
-    // Загрузка первой вкладки при старте страницы
-    window.onload = () => switchTab('groups');
-</script>
+    <section class="linkCollection visible">
+      <h2 class="linkCollection__title">Список ссылок</h2>
+      <ol class="linksRow"></ol>
+    </section>
+  </main>
 
 </body>
+
+<template id="cardTemplate">
+  <article class="card" data-groupid>
+    <img class="card-img-top" src="" alt="" loading="lazy">
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text">Группа для дистанционного обучения в MAX</p>
+      <a href="#" class="link__groupMAX" target="_blank">Присоединиться</a>
+    </div>
+  </article>
+</template>
+
+<template id="linkRow">
+  <li class="linkRow"></li>
+</template>
+
+<script src="./js/data.js"></script>
+<script src="./js/theme.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/main.js"></script>
+
 </html>
