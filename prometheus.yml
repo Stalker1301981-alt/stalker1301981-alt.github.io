@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 5s # Собираем метрики каждые 5 секунд
+
+rule_files:
+  - "alert.rules.yml" # Подключаем файл с правилами тревоги
+
+scrape_configs:
+  - job_name: 'jenkins-monitoring'
+    metrics_path: '/prometheus/'
+    static_configs:
+      # host.docker.internal позволяет контейнеру Prometheus достучаться до вашего локального Jenkins
+      - targets: ['host.docker.internal:8080'] 
