@@ -1,6 +1,10 @@
 pipeline {
     agent any 
-
+// Добавляем триггер опроса репозитория
+    triggers {
+        // Проверять GitHub каждую минуту на наличие новых коммитов
+        pollSCM('* * * * *')
+    }
     stages {
         stage('Checkout') {
             steps {
