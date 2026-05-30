@@ -1,0 +1,11 @@
+groups:
+  - name: sber_jenkins_alerts
+    rules:
+      - alert: SberPipelineHasFailed
+        expr: default_jenkins_builds_last_build_status_successful == 0
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Критический сбой сборки Jenkins!"
+          description: "Пайплайн упал. Срочно проверьте логи сборки!"
